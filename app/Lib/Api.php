@@ -33,7 +33,7 @@ class Api extends Controller
         ]);
         return json_decode($res->getBody(), true);
     }
-    public function WebPut($url,$body){
+    public function WebPost($url,$body){
 		//Global $apikey;
 		$client = new Client();
         $res = $client->request('POST', $url,[
@@ -42,6 +42,18 @@ class Api extends Controller
                 'Accept' => 'application/json',
             ],
             'form_params' => $body,
+        ]);
+        return json_decode($res->getBody(), true);
+    }
+    public function WebPut($url,$body){
+		//Global $apikey;
+		$client = new Client();
+        $res = $client->request('PUT', $url,[
+            'headers' => [
+                'Authorization' => 'Bearer '.$this->acces_token,
+                'Accept' => 'application/json',
+            ],
+            'json' => $body,
         ]);
         return json_decode($res->getBody(), true);
     }

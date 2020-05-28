@@ -37,7 +37,7 @@ class UserController extends Controller
                 'name' => $name             
             ];
             $api=new Api();
-            $users=$api->WebPut('http://localhost/hethongbanhang/api/user',$body);
+            $users=$api->WebPost('http://localhost/hethongbanhang/api/user',$body);
         }else{
             $api=new Api();
             $users=$api->WebGet('http://localhost/hethongbanhang/api/user');
@@ -110,12 +110,26 @@ class UserController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }else{
+            $api=new Api();
+            $username=$request->input('username');
+            $email=$request->input('email');
+            $name=$request->input('name');
+            $pass=Hash::make($request->input('password'));
+            $body=[
+                'username' => $username,
+                'email' => $email,
+                'name' => $name,
+                'password'=> $pass,            
+            ];
+            $users=$api->WebPut('http://localhost/hethongbanhang/api/user/edit/'.$id,$body);
+            /*
             $User=User::find($id);
             $User->username=$request->input('username');
             $User->password=Hash::make($request->input('password'));
             $User->name=$request->input('name');
             $User->email=$request->input('email');
             $User->save();
+            */
             return redirect()->back()
                             ->with('success', 'User '.$request->input('username').' vừa được cập nhật !');
         }

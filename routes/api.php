@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth:api'],function(){
         return User::all();
     });
     Route::post('/user','Api\UserController@search');
+    Route::put('/user/edit/{id}','Api\UserController@edit');
 
     //Route::get('/admin/user/search/', 'Admin\UserController@search');
 });
